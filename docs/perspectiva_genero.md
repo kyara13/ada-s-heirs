@@ -11,12 +11,30 @@
 
 ## Evaluación de sesgos del clasificador
 
-<!-- TODO: resultados sobre FairFace (CC BY 4.0) u otra muestra equilibrada:
-precisión del género percibido por grupo de edad y tono de piel. ¿Falla más con algún grupo? -->
+No hemos usado FairFace. Evaluamos el clasificador sobre fragmentos de películas anotados a mano
+(anotación humana de referencia en `data/annotations/anotaciones.csv`), agrupados por tipo de película,
+para ver si falla más con algún tipo de material y con algún género. Las películas se eligieron para
+cubrir condiciones distintas: blanco y negro con sonido, cine mudo y cine en color.
 
-| Grupo | Precisión | Recall | Nº muestras |
-|---|---|---|---|
-| <!-- TODO --> | | | |
+Parámetros del sistema: `vote_threshold` = 0,8 (porcentaje mínimo de votos coincidentes para asignar
+etiqueta).
+
+| Grupo | Precisión | Recall | Sin decidir | Nº muestras |
+|---|---|---|---|---|
+| Detour (B/N, sonora): mujeres | sin predicciones de "mujer" | 0,00 (0 de 4) | 3 de 4 (75 %) | 4 recuadros |
+| Detour (B/N, sonora): hombres | 0,93 | 0,67 (14 de 21) | 7 de 21 (33 %) | 21 recuadros |
+| The General (muda) | pendiente | pendiente | pendiente | pendiente |
+| Película en color | pendiente | pendiente | pendiente | pendiente |
+
+**Muestra y cautelas.** Detour: fragmento de 3 minutos (60 a 240 s), 25 recuadros. No son 25 personas
+distintas, porque una misma persona aparece con varios números. Anotación manual de referencia hecha
+por una persona del equipo. En total, el sistema deja sin decidir al 40 % de los recuadros.
+
+**Lectura.** En las tres mujeres que quedan sin decidir, la mayoría de votos del modelo era la correcta,
+pero con una confianza de 0,57 a 0,61, por debajo del umbral de 0,8. El único error del fragmento
+(una mujer clasificada como hombre) tiene confianza 1,0, pero se apoya en pocos fotogramas: es una
+mujer que se gira de espaldas muy deprisa. Con tan pocas mujeres (4) no podemos concluir un sesgo
+general. Lo presentamos como una señal que hay que validar con más películas y más muestras.
 
 ## Interpretación con perspectiva de género (lección de Karina Gibert)
 
