@@ -1,14 +1,11 @@
-"""Evalúa el género percibido por el sistema contra las anotaciones manuales.
+"""Compara el género percibido por el sistema con nuestras anotaciones manuales.
 
 Uso:
   python scripts/evaluate.py --annotations data/annotations/anotaciones.csv
 
-El CSV de anotaciones tiene: video_id, track_id, genero_percibido, protagonista, notas
-(ver data/annotations/README.md). Se compara con outputs/<video_id>/personas.json
-(la predicción automática, NO la revisada).
-
-Muestra matriz de confusión y precisión / recall / F1 por clase.
-Recordad: con clases desbalanceadas la accuracy engaña; mirad precisión y recall.
+Comparamos con outputs/<video_id>/personas.json (la predicción automática, no la revisada) y
+mostramos la matriz de confusión y la precisión, el recall y el F1 por clase. Como las clases
+están desbalanceadas, nos fijamos en la precisión y el recall, no en la accuracy.
 """
 
 import argparse

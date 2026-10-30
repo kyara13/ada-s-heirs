@@ -1,6 +1,6 @@
 """Junta las métricas de todas las películas procesadas y las resume por década.
 
-Uso:  python scripts/resumen_corpus.py
+Uso:    python scripts/resumen_corpus.py
 Salida: outputs/resumen_corpus.csv (una fila por película) y una tabla por década en pantalla.
 """
 
@@ -33,8 +33,8 @@ def main():
             "pct_protagonistas_mujeres": pg.get("mujer", {}).get("pct_protagonistas", 0.0),
             "pct_no_determinado": pg.get("no_determinado", {}).get("pct_personas", 0.0),
             "pct_tiempo_no_determinado": pg.get("no_determinado", {}).get("pct_screen_time", 0.0),
-            # % de mujeres SOLO entre el tiempo con género determinado (mujer + hombre):
-            # no depende de cuántas personas quedan como no_determinado
+            # % de mujeres solo sobre el tiempo con género determinado,
+            # para que no dependa de cuántas personas quedan sin determinar
             "pct_tiempo_mujeres_determinado": round(100 * t_m / (t_m + t_h), 1) if t_m + t_h else 0.0,
             "fuente_etiquetas": m.get("fuente_etiquetas", ""),
         })

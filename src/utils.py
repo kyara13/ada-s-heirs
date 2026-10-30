@@ -5,7 +5,7 @@ from pathlib import Path
 
 import yaml
 
-# Límite de segundos a analizar (0 = vídeo entero). Lo fija pipeline.py desde video.max_seconds.
+# Segundos que analizamos (0 = vídeo entero). Lo fija pipeline.py.
 MAX_SECONDS = 0
 
 
@@ -66,9 +66,9 @@ def video_info(video_path):
 
 
 def iter_frames(video_path, fps_sample, max_side=0):
-    """Devuelve (indice_frame, tiempo_s, imagen_BGR, escala) muestreando a fps_sample.
+    """Recorre el vídeo a fps_sample y devuelve (índice, tiempo_s, imagen_BGR, escala).
 
-    'escala' es el factor aplicado si se redimensiona (para convertir cajas a la resolución original).
+    Usamos la escala para devolver las cajas a la resolución original.
     """
     import cv2
     cap = cv2.VideoCapture(str(video_path))

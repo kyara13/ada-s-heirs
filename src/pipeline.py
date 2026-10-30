@@ -1,12 +1,12 @@
-"""Ejecuta el pipeline completo o algunas etapas.
+"""Ejecuta todo el pipeline o solo algunas etapas.
 
 Uso:
   python -m src.pipeline --video data/videos/ejemplo.mp4
   python -m src.pipeline --video data/videos/ejemplo.mp4 --steps aggregation,metrics
-  python -m src.pipeline --video data/videos/ejemplo.mp4 --force   # rehace aunque ya exista
+  python -m src.pipeline --video data/videos/ejemplo.mp4 --force
 
-Cada etapa guarda su JSON en outputs/<nombre_video>/. Si el JSON ya existe, la etapa se salta
-(salvo --force o si la pides explícitamente con --steps).
+Cada etapa guarda su JSON en outputs/<vídeo>/. Si ya existe, lo reutilizamos
+(salvo con --force o si pedimos esa etapa con --steps).
 """
 
 import argparse

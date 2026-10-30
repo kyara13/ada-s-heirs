@@ -1,13 +1,12 @@
-"""Descarga los vídeos listados en data/sources.csv (solo las filas con usar = si).
+"""Descarga los vídeos de data/sources.csv (solo las filas con usar = si).
 
-Si la fila tiene 'url_descarga', se usa ese enlace. Si no, el script pregunta a la API de
-Internet Archive (https://archive.org/metadata/<id>) qué ficheros tiene la película y elige
-un .mp4 (preferencia: h.264 > MPEG4 > 512Kb MPEG4; el más grande por debajo de MAX_GB).
+Si la fila no tiene url_descarga, preguntamos a la API de Internet Archive qué ficheros hay
+y elegimos un .mp4 (h.264 > MPEG4 > 512Kb MPEG4; el más grande por debajo de MAX_GB).
 
 Uso:
-  python scripts/download_videos.py                    # a data/videos/
+  python scripts/download_videos.py
   python scripts/download_videos.py --dest /workspace/videos
-  python scripts/download_videos.py --solo Detour      # una sola película
+  python scripts/download_videos.py --solo Detour
 """
 
 import argparse

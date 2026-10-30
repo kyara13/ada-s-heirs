@@ -1,7 +1,6 @@
-"""Etapa 1 — Detección de planos (cortes de cámara).
+"""Etapa 1: detección de planos (cortes de cámara).
 
 Salida: planos.json
-  {"video": ..., "duration_s": ..., "shots": [{"shot_id": 0, "start_s": 0.0, "end_s": 12.4}, ...]}
 """
 
 from . import utils
@@ -22,7 +21,7 @@ def detect_shots(video_path, cfg):
         return [{"shot_id": 0, "start_s": 0.0, "end_s": info["duration_s"]}]
 
     min_len = int(shots_cfg["min_shot_s"] * info["fps"])
-    luma_only = shots_cfg.get("luma_only", True)   # True: mejor para cine en blanco y negro
+    luma_only = shots_cfg.get("luma_only", True)   # solo brillo: lo necesitamos para el blanco y negro
     if shots_cfg.get("detector", "adaptive") == "adaptive":
         detector = AdaptiveDetector(min_scene_len=min_len, luma_only=luma_only)
     else:

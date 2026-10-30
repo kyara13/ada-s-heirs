@@ -1,13 +1,10 @@
-"""Demo con supervisión humana.
+"""Demo con supervisión humana. Uso: streamlit run app/app.py
 
-Uso:  streamlit run app/app.py
+1. Elegimos un vídeo ya procesado.
+2. Revisamos la tabla de personas y corregimos la etiqueta si hace falta.
+3. Al guardar, creamos personas_revisado.json y recalculamos las métricas.
 
-1. Elige un vídeo ya procesado (carpeta en outputs/).
-2. Revisa la tabla de personas: puedes CORREGIR la etiqueta de género percibido.
-3. "Guardar revisión" crea personas_revisado.json y recalcula las métricas con tus correcciones.
-
-Así una persona puede aceptar o rechazar lo que dice la IA antes de dar el informe por bueno
-(supervisión humana, marco ético europeo).
+Así una persona valida lo que dice la IA antes de dar el informe por bueno.
 """
 
 import sys

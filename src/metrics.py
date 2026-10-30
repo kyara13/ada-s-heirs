@@ -1,19 +1,13 @@
-"""Etapa 6 — Métricas de presencia y protagonismo.
+"""Etapa 6: métricas de presencia y protagonismo.
 
-Por persona (trayectoria):
-  screen_time_s   tiempo en pantalla (observaciones / fps_sample)
-  size            área media de la caja respecto al frame (0–1)
-  centrality      1 = centro exacto del frame, 0 = esquina
-  solo            fracción de sus frames en los que es la única persona visible
-  edges           1 si aparece al principio o al final del vídeo (edge_fraction), si no 0
-  n_shots         número de planos en los que aparece
-  protagonism     índice ponderado (pesos en config.yaml), 0–1
+Por persona calculamos el tiempo en pantalla, el tamaño, la centralidad, si aparece sola,
+si aparece al principio o al final y el índice de protagonismo (pesos en config.yaml).
+Por género percibido: % de tiempo, % de personas, índice medio y % de protagonistas.
 
-Por género percibido: % de tiempo en pantalla, % de personas, índice medio, % de protagonistas.
+Si existe personas_revisado.json (corregido en la demo), lo usamos en vez de personas.json:
+la revisión humana tiene prioridad.
 
-Salida: metricas.json  {"personas": [...], "por_genero": {...}, "resumen": {...}}
-Si existe personas_revisado.json (corregido por una persona en la demo), se usa ese en lugar
-de personas.json: la revisión humana tiene prioridad.
+Salida: metricas.json
 """
 
 import math
@@ -24,7 +18,7 @@ from .utils import load_json, save_json
 
 def person_features(observations, width, height, fps_sample, duration_s,
                     frames_with_count, edge_fraction=0.1):
-    """observations: observaciones de UNA trayectoria. frames_with_count: {frame: nº personas}."""
+    """observations: las de una trayectoria. frames_with_count: {frame: nº de personas}."""
     cx0, cy0 = width / 2, height / 2
     max_dist = math.hypot(cx0, cy0)
     sizes, cents, solos = [], [], []
@@ -51,7 +45,7 @@ def person_features(observations, width, height, fps_sample, duration_s,
 
 
 def protagonism_index(features, max_screen_time, max_size, weights):
-    """Normaliza cada componente a 0–1 y hace la media ponderada."""
+    """Normalizamos cada componente a 0–1 y hacemos la media ponderada."""
     comps = {
         "screen_time": features["screen_time_s"] / max_screen_time if max_screen_time else 0.0,
         "size": features["size"] / max_size if max_size else 0.0,

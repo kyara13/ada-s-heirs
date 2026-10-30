@@ -1,20 +1,15 @@
-"""Etapa 2 — Detección de personas frame a frame.
+"""Etapa 2: detección de personas en cada fotograma analizado.
+
+Guardamos las cajas en píxeles de la resolución original del vídeo.
 
 Salida: detecciones.json
-  {"video": ..., "width": W, "height": H, "fps_sample": 2,
-   "frames": [{"frame": 0, "t": 0.0, "shot_id": 0,
-               "boxes": [[x1, y1, x2, y2, score], ...]}, ...]}
-
-Las cajas están en píxeles de la resolución ORIGINAL del vídeo.
-Para añadir otro detector: crea una clase con método detect(frame_bgr) -> lista de [x1,y1,x2,y2,score]
-y regístrala en get_detector().
 """
 
 from .utils import iter_frames, load_json, resolve_device, save_json, shot_for_time, video_info
 
 
 class TorchvisionFasterRCNN:
-    """Faster R-CNN preentrenado en COCO (torchvision, licencia BSD). Clase 1 = persona."""
+    """Faster R-CNN de torchvision (BSD), preentrenado en COCO. La clase 1 es persona."""
 
     PERSON_LABEL = 1
 
@@ -23,10 +18,10 @@ class TorchvisionFasterRCNN:
         from torchvision.models import detection as tvd
         self.torch = torch
         self.device = resolve_device(device)
-        if light:   # MobileNetV3: mucho más rápido en CPU, algo menos preciso
+        if light:   # MobileNetV3: más rápido en CPU, algo menos preciso
             weights = tvd.FasterRCNN_MobileNet_V3_Large_FPN_Weights.DEFAULT
             model = tvd.fasterrcnn_mobilenet_v3_large_fpn(weights=weights)
-        else:       # ResNet50 v2: preciso, pensado para GPU
+        else:       # ResNet50 v2: más preciso, para GPU
             weights = tvd.FasterRCNN_ResNet50_FPN_V2_Weights.DEFAULT
             model = tvd.fasterrcnn_resnet50_fpn_v2(weights=weights)
         self.model = model.to(self.device).eval()

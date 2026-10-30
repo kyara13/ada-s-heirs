@@ -1,12 +1,9 @@
-"""Etapa 3 — Tracking: une las detecciones de cada frame en trayectorias con ID.
+"""Etapa 3: unimos las detecciones de cada fotograma en trayectorias con un ID.
 
-El tracker se reinicia en cada plano: una persona no se "sigue" a través de un corte de cámara.
+Reiniciamos el tracker en cada plano: no seguimos a nadie a través de un corte.
 Los IDs son únicos en todo el vídeo: track_id = shot_id * 10000 + id_local.
 
 Salida: tracks.json
-  {"video": ..., "width": W, "height": H, "fps_sample": 2, "duration_s": ...,
-   "observations": [{"frame": 0, "t": 0.0, "shot_id": 0, "track_id": 10001,
-                     "box": [x1, y1, x2, y2], "score": 0.93}, ...]}
 """
 
 from collections import Counter
@@ -56,7 +53,7 @@ def run(video_path, cfg, outdir):
                 "box": [float(v) for v in box], "score": float(score),
             })
 
-    # Descartar trayectorias demasiado cortas (ruido)
+    # Descartamos las trayectorias demasiado cortas (ruido)
     counts = Counter(o["track_id"] for o in observations)
     min_frames = cfg["tracking"]["min_track_frames"]
     observations = [o for o in observations if counts[o["track_id"]] >= min_frames]

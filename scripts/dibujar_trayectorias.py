@@ -1,24 +1,14 @@
-"""Crea un vídeo corto con las personas seguidas dibujadas, para poder anotar a mano.
+"""Dibuja las personas seguidas sobre un trozo de película para anotarlo a mano.
 
-Cada persona sale con una caja de color y su número de trayectoria (track_id) en grande.
-Así se sabe qué fila de anotaciones.csv corresponde a cada persona.
-
-Además crea una plantilla de anotaciones con una fila por persona que aparece en el trozo,
-con la columna de género VACÍA: la rellenáis vosotras sin mirar lo que dijo el programa
-(si lo veis antes, os influye y la evaluación ya no vale).
+Cada persona sale con una caja de color y su número de trayectoria. También generamos una
+plantilla de anotaciones con la columna de género vacía: la rellenamos sin mirar lo que dijo
+el sistema, para que no nos influya.
 
 Uso (después de procesar la película con src.pipeline):
   python scripts/dibujar_trayectorias.py --video /workspace/videos/Detour.mp4 --desde 60 --hasta 240
 
-Salida:
-  outputs/<película>/revision_<desde>-<hasta>.mp4        vídeo con las cajas
-  outputs/<película>/plantilla_<desde>-<hasta>.csv       filas para copiar a anotaciones.csv
-
-Además crea dos imágenes para anotar sin tener que ver todo el vídeo:
-  outputs/<película>/fichas_personas_<desde>-<hasta>.png   una miniatura por persona (su caja, número y minuto)
-  outputs/<película>/fichas_planos_<desde>-<hasta>.png     una imagen por plano con todas las cajas
-
-Opcional: --mostrar-etiqueta escribe también lo que dijo el programa (solo para revisar, NO para anotar).
+Salida en outputs/<película>/: revision_*.mp4, plantilla_*.csv, fichas_personas_*.png y
+fichas_planos_*.png. Con --mostrar-etiqueta escribe también la predicción (solo para revisar).
 """
 
 import argparse
@@ -170,8 +160,7 @@ def main():
     salida = carpeta / f"revision_{nombre}.mp4"
     escritor = cv2.VideoWriter(str(salida), cv2.VideoWriter_fourcc(*"mp4v"), fps, (ancho, alto))
 
-    # El pipeline analiza 1 de cada 'paso' fotogramas (fps_sample por segundo). Entre dos fotogramas
-    # analizados se mantienen las cajas del último analizado; si en él no había nadie, no se dibuja nada.
+    # Entre dos fotogramas analizados mantenemos las cajas del último; si no había nadie, no dibujamos nada.
     paso = max(1, round(fps / tracks["fps_sample"]))
     ultimas = []
     vistos = defaultdict(int)

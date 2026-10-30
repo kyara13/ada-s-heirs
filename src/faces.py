@@ -1,14 +1,11 @@
-"""Etapa 4 — Análisis facial dentro de cada persona seguida: género PERCIBIDO y edad estimada.
+"""Etapa 4: género percibido y edad estimada a partir de la cara de cada persona seguida.
 
-IMPORTANTE (licencias y ética):
-- El código de InsightFace es MIT, pero sus modelos preentrenados son de USO NO COMERCIAL.
-  No se incluyen en el repo: se descargan automáticamente la primera vez. Documentadlo en el README.
-- Las caras se procesan en memoria y se descartan: NO se guardan recortes ni embeddings faciales.
-- La salida es "género percibido por un modelo", no identidad de género.
+- Usamos el código de InsightFace (MIT); sus modelos preentrenados son de uso no comercial,
+  así que no los incluimos en el repositorio: se descargan la primera vez.
+- Procesamos las caras en memoria y las descartamos: no guardamos recortes ni embeddings.
+- El resultado es el género percibido por un modelo, no la identidad de género.
 
 Salida: caras.json
-  {"observations": [{"frame": 0, "track_id": 10001, "gender": "mujer"|"hombre"|null,
-                     "age": 41.0, "face_score": 0.88, "face_box": [x1, y1, x2, y2]}, ...]}
 """
 
 from collections import defaultdict
@@ -28,7 +25,7 @@ class InsightFaceAnalyzer:
         self.min_face_score = min_face_score
 
     def analyze(self, crop_bgr):
-        """Devuelve la cara principal del recorte o None."""
+        """Devuelve la cara más grande del recorte, o None."""
         faces = [f for f in self.app.get(crop_bgr) if f.det_score >= self.min_face_score]
         if not faces:
             return None
@@ -77,7 +74,7 @@ def run(video_path, cfg, outdir):
                 face["face_box"] = [(fx1 + x1) / scale, (fy1 + y1) / scale,
                                     (fx2 + x1) / scale, (fy2 + y1) / scale]
                 results.append({"frame": idx, "track_id": o["track_id"], **face})
-                # El recorte 'crop' se descarta aquí: no se guarda ninguna imagen de la cara.
+                # Aquí descartamos el recorte: no guardamos ninguna imagen de la cara.
 
     save_json({"observations": results}, outdir / "caras.json")
     print(f"[faces] {len(results)} caras analizadas")
