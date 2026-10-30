@@ -1,27 +1,29 @@
 # Anotaciones manuales (ground truth)
 
-Sirven para **evaluar** el sistema. Hay que anotar a mano 10–15 clips cortos.
+Las usamos para **evaluar** el sistema: comparamos lo que predice con lo que anotamos nosotras a mano.
 
-## Cómo anotar
+Anotamos fragmentos de dos películas de las 17, elegidas por ser muy distintas:
 
-1. Procesa el clip: `python -m src.pipeline --video data/videos/<id>.mp4`
-2. Abre `outputs/<id>/personas.json` y la demo (`streamlit run app/app.py`) para ver los `track_id`.
-3. Para cada persona, añade una fila en `anotaciones.csv`:
+- *Detour* (1945), sonora en blanco y negro: 3 minutos (de 60 a 240 s), 25 recuadros.
+- *The General* (1927), muda y de baja calidad: 24 trayectorias, más las apariciones que el detector no encontró.
 
-| columna | valores |
+## Cómo anotamos
+
+1. Procesamos el fragmento con `python -m src.pipeline` y generamos las fichas de revisión con
+   `scripts/dibujar_trayectorias.py`.
+2. Para cada persona añadimos una fila en `anotaciones.csv`, sin mirar antes la predicción del sistema.
+3. Las personas que el sistema no detectó las apuntamos en `no_detectadas.csv`.
+4. Evaluamos con `python scripts/evaluate.py`.
+
+| Columna | Valores |
 |---|---|
 | `video_id` | nombre del vídeo sin `.mp4` |
-| `track_id` | ID de la trayectoria |
+| `track_id` | número de la trayectoria |
 | `genero_percibido` | `mujer` / `hombre` / `no_determinado` |
-| `protagonista` | `si` / `no` (vuestro juicio humano) |
-| `notas` | lo que queráis (p. ej. "de perfil todo el rato") |
+| `protagonista` | `si` / `no` (nuestro juicio) |
+| `notas` | observaciones, por ejemplo "de perfil todo el rato" |
 
-4. Evalúa: `python scripts/evaluate.py`
+## Criterios
 
-## Reglas
-
-- Anotad **género percibido**, igual que el modelo. Si dudáis, `no_determinado`.
-- Que anoten al menos **dos personas del equipo** un par de clips y comparad: si no coincidís,
-  la métrica es ambigua (eso también es un resultado a contar).
-- Anotad unos minutos de 2–3 películas de épocas distintas (una muda, una en color, una de cine negro).
-- No guardéis nombres de personas en este CSV si no hace falta.
+- Anotamos **género percibido**, igual que el modelo. Si dudamos, ponemos `no_determinado`.
+- No guardamos nombres de actrices ni actores: no hacen falta para evaluar.

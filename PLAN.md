@@ -1,28 +1,13 @@
-# Plan de trabajo — entrega 30/10/2026 a las 08:00
+# Plan de trabajo
 
-## Calendario
+Desarrollamos el proyecto entre el 24 y el 30 de octubre de 2026.
 
-| Día | Objetivo | Hecho |
-|---|---|---|
-| Sáb 24 | Problema en una frase, métricas (docs/metricas.md), revisar las 17 películas de data/sources.csv (verificar licencia en su ficha), crear repo en GitHub (mandar usuario a la organización) | [ ] |
-| Dom 25 | Instalar en local y ejecutar el pipeline con 1 película (o sus primeros 10 min) y medir el tiempo | [ ] |
-| Lun 26 | Arreglar errores, anotar clips de evaluación | [ ] |
-| Mar 27 | Procesar las 17 películas en la GPU de OVH; evaluación de sesgos | [ ] |
-| Mié 28 | Evaluación final, demo, README y docs | [ ] |
-| Jue 29 | PPTX, vídeo de 5 min, revisión final. **Entregar el jueves por la noche** | [ ] |
-
-## Reparto (ajustadlo)
-
-| Bloque | Responsable |
+| Día | Qué hicimos |
 |---|---|
-| Pipeline y modelos (`src/`) | <!-- TODO --> |
-| Datos, anotación y evaluación (`data/`, `scripts/evaluate.py`) | <!-- TODO --> |
-| Demo, presentación, vídeo, ética y despliegue (`app/`, `presentacion/`, `docs/`) | <!-- TODO --> |
+| 24/10 | Definimos el problema y las métricas, elegimos las 17 películas y creamos el repositorio |
+| 25–26/10 | Instalamos el pipeline en local y lo probamos con los primeros 5 minutos de *Detour* |
+| 27/10 | Pasamos el análisis de caras a la GPU de OVHcloud y, con 6 películas, ajustamos el umbral de votación |
+| 28–29/10 | Anotamos *Detour* y *The General* a mano, evaluamos el sistema y preparamos la demo y la documentación |
+| 30/10 | Entrega: repositorio, presentación y vídeo |
 
-## Pendientes externos
-
-- [ ] Credenciales de OVHcloud (email del equipo)
-- [ ] Contraseña de la web de materiales (enginyeriainformatica.cat) y notebook de Verónica
-- [ ] Usuario de GitHub del equipo enviado a la organización
-- [ ] Confirmar con mentoras (Discord) la parte de normativa
-- [ ] Ver la formación grabada de código abierto
+La hoja de ruta para después del reto está en el [README](README.md#9-hoja-de-ruta).

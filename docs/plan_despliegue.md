@@ -2,41 +2,39 @@
 
 ## Usuarios y caso de uso
 
-| Usuario | Para qué lo usa | Qué información ve |
+| Usuario | Para qué lo usaría | Qué vería |
 |---|---|---|
-| Filmotecas y archivos (p. ej. Filmoteca Española, filmotecas autonómicas) | Analizar la representación en sus fondos por época | Informe agregado por década/género |
+| Filmotecas y archivos | Analizar la representación en sus fondos por época | Informe agregado por década y género |
 | Festivales y premios de cine | Ofrecer un indicador de representación de las películas presentadas | Métricas por película |
-| Productoras y plataformas | Autoevaluar sus producciones antes del estreno | Informe + revisión humana |
-| Investigadoras y docentes de estudios de cine y género | Estudios cuantitativos reproducibles | Datos agregados abiertos |
+| Productoras y plataformas | Autoevaluar sus producciones antes del estreno | Informe con revisión humana |
+| Investigadoras y docentes de cine y género | Estudios cuantitativos reproducibles | Datos agregados abiertos |
 
-## Dónde interviene la persona (supervisión humana)
+## Supervisión humana
 
 1. El sistema procesa el vídeo y propone etiquetas y métricas.
 2. Una persona revisa en la demo las etiquetas dudosas y las corrige.
-3. Solo entonces se genera el informe final.
+3. Solo entonces generamos el informe final.
 
 ## Infraestructura
 
-- Desarrollo: local con muestras pequeñas.
-- Procesamiento: GPU (piloto en OVHcloud, 2× V100S). <!-- TODO: tiempo por hora de vídeo medido -->
-- Coste estimado: <!-- TODO: horas de GPU por hora de vídeo × precio; mantenimiento -->
+- Desarrollo en local, con muestras pequeñas.
+- Procesamiento en GPU (piloto en OVHcloud, 2 NVIDIA V100S). En CPU, el análisis de caras tardaba unas 3 horas por película.
 
 ## Permisos y acuerdos necesarios
 
-- Películas de dominio público: comprobar la licencia de cada una (y su estado en la UE).
-- Archivo de filmotecas o catálogos comerciales: **acuerdo previo** con el titular de los derechos.
-- Televisiones: **acuerdo previo** con la cadena para acceder a su archivo mediante API; nunca scraping.
-- Modelos de terceros: revisar licencias (InsightFace = uso no comercial → para uso comercial
-  sustituir por un modelo con licencia compatible).
+- Películas de dominio público: comprobamos la licencia de cada una y su situación en la UE.
+- Fondos de filmotecas o catálogos comerciales: acuerdo previo con quien tenga los derechos.
+- Televisiones: acuerdo previo con la cadena para acceder a su archivo por API, nunca por scraping.
+- Modelos de terceros: los modelos de InsightFace son de uso no comercial; para un uso comercial los sustituiríamos por otro modelo con licencia compatible.
 - Evaluación de impacto antes de ampliar a otros contextos.
 
 ## Fases
 
-1. **Piloto** (este reto): 17 películas de dominio público, 1925–1968.
-2. **Validación** con una institución usuaria y feedback.
-3. **Ampliación** a las 200 candidatas y, con acuerdos, a cine contemporáneo, series y televisión.
+1. **Piloto** (este reto): 17 películas de dominio público, de 1925 a 1968.
+2. **Validación** con una institución usuaria, como una filmoteca o un festival.
+3. **Ampliación**, con los acuerdos necesarios, a cine actual, series y televisión.
 
-## Mantenimiento y sustitución de modelos
+## Mantenimiento
 
-Los modelos se configuran en `config/config.yaml` y cada etapa es independiente: se puede sustituir
-un modelo sin tocar el resto (sistema agnóstico respecto al modelo).
+Configuramos los modelos en `config/config.yaml` y cada etapa es independiente: podemos sustituir un
+modelo sin tocar el resto, así que el sistema es agnóstico respecto al modelo.

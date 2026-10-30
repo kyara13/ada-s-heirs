@@ -1,26 +1,22 @@
-# Registro de decisiones y backlog
+# Registro de decisiones
 
-Apuntad aquí cada decisión importante (fecha, quién, por qué). Sirve para la presentación,
-para la rendición de cuentas y para no repetir discusiones.
+Apuntamos cada decisión importante con su fecha y el motivo.
 
-## Decisiones
+| Fecha | Decisión | Por qué |
+|---|---|---|
+| 24/10/2026 | Modalidad: vídeo | Nos permite medir el protagonismo visual: tamaño, centralidad y planos en solitario |
+| 24/10/2026 | Corpus: 17 películas de dominio público (1925–1968) de Internet Archive | Licencia abierta declarada, comparación entre épocas y tema de interés del equipo |
+| 24/10/2026 | 17 películas | Es un estudio exploratorio; así ajustamos el coste de GPU y el tiempo de anotación |
+| 24/10/2026 | Detector de torchvision (BSD) en vez de YOLO de Ultralytics (AGPL) | Compatibilidad con la licencia MIT del repositorio |
+| 24/10/2026 | Votación por trayectoria con umbral del 80 % y clase `no_determinado` | El clasificador falla en fotogramas sueltos |
+| 26/10/2026 | Detección de planos solo por brillo (`luma_only`, AdaptiveDetector) | Con color no detectaba ningún corte en películas en blanco y negro |
+| 27/10/2026 | Análisis de caras en GPU con onnxruntime-gpu 1.22.0 | La versión para CUDA 13 no soporta las V100S; en CPU tardaba unas 3 horas por película |
+| 27/10/2026 | Votación: umbral del 70 % y mínimo de 2 caras (antes 80 % y 3) | Con 6 películas, el tiempo sin determinar baja entre 6 y 11 puntos y el % de mujeres cambia menos de 2 puntos |
+| 27/10/2026 | *The General* marcada como dudosa | El modelo da un 84 % de mujeres en una película con un solo papel femenino relevante; nuestra anotación cuenta 4 mujeres de 24 personas |
 
-| Fecha | Decisión | Por qué | Quién |
-|---|---|---|---|
-| 2026-10-24 | Modalidad: vídeo | <!-- TODO --> | Equipo |
-| 2026-10-24 | Corpus: 17 películas de dominio público (1925–1968) de Internet Archive | Licencia abierta declarada, comparación por épocas, tema de interés del equipo | Equipo |
-| 2026-10-24 | 17 películas y no 200 | Representatividad: es un estudio exploratorio; coste de GPU; tiempo de anotación | Equipo |
-| 2026-10-24 | Detector torchvision (BSD) en vez de YOLO Ultralytics (AGPL) | Compatibilidad con licencia MIT del repo | Equipo |
-| 2026-10-24 | Votación por trayectoria con umbral 80 % y clase `no_determinado` | El clasificador falla en frames sueltos | Equipo |
-| 2026-10-26 | Detección de planos solo por brillo (`luma_only`, AdaptiveDetector) | Con color no detectaba ningún corte en películas en blanco y negro | Equipo |
-| 2026-10-27 | Análisis de caras en GPU con onnxruntime-gpu 1.22.0 | La versión para CUDA 13 no soporta las V100S; por CPU tardaba ~3 h por película | Equipo |
-| 2026-10-27 | Votación: umbral 70 % y mínimo 2 caras (antes 80 % y 3) | Análisis de sensibilidad con 6 películas: el tiempo sin determinar baja 6–11 puntos y el % de mujeres cambia menos de 2 puntos | Equipo |
-| 2026-10-27 | *The General* marcada como dudosa | 84 % de mujeres en una película con un solo papel femenino relevante: el modelo falla con cine mudo de baja calidad. Pendiente de confirmar con anotación | Equipo |
+## Ideas para después
 
-## Backlog (ideas para después, priorizadas)
-
-- [ ] Audio: quién habla (Whisper + diarización) y cruzarlo con quién sale en plano
-- [ ] Re-identificación de la misma persona en planos distintos
-- [ ] Orientación de la cara (frontal/perfil) como componente del índice
-- [ ] Medida de incertidumbre del % final (intervalos)
-- [ ] <!-- TODO -->
+- Audio: quién habla (Whisper y diarización), cruzado con quién sale en plano.
+- Reconocer a la misma persona en planos distintos.
+- Incluir la orientación de la cara (frontal o de perfil) en el índice.
+- Intervalos de incertidumbre para cada porcentaje.

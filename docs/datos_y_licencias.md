@@ -1,51 +1,41 @@
 # Datos y licencias
 
-## Corpus principal: cine clásico de dominio público (Internet Archive)
+## Corpus: cine clásico de dominio público (Internet Archive)
 
-- Fuente: colección *Feature Films* de Internet Archive — https://archive.org/details/feature_films
-- Selección: **17 largometrajes de 1925 a 1968** en `data/sources.csv`, repartidos por décadas.
-- Candidatas: `data/candidatas_200.csv` — 200 largometrajes con licencia abierta declarada
-  (Public Domain, Public Domain Mark, CC0 o CC BY), ordenados por descargas. Reserva para escalar.
+- Fuente: colección *Feature Films* de Internet Archive (https://archive.org/details/feature_films).
+- Selección: **17 largometrajes de 1925 a 1968**, listados en `data/sources.csv` y repartidos por décadas.
 
-### Criterios de selección
+### Cómo las elegimos
 
-1. Licencia abierta declarada y película estadounidense anterior a 1970 (licencia más fiable).
-2. Distintas décadas (1920s–1960s) para poder comparar épocas.
-3. Calidad de imagen suficiente para detectar caras; se incluyen varias en color.
-4. Sin protagonistas menores de edad (los clasificadores fallan con niñas y niños).
-5. Variedad de géneros (comedia, drama, cine negro, terror, western, musical) y de repartos,
-   incluida *The Blood of Jesus* (1941), de cineasta y reparto afroamericanos.
-6. Fuera: documentales, propaganda, animación y películas de explotación sexual o de drogas.
+1. **Cumplen la licencia:** licencia abierta declarada y películas estadounidenses anteriores a 1970,
+   cuando el dominio público es más fiable. Comprobamos la ficha de cada una (`licencia_verificada = si`).
+2. **Son variadas:** distintas décadas, mudas y sonoras, en blanco y negro y en color, y géneros y repartos
+   distintos (comedia, drama, cine negro, terror, western, musical), incluida *The Blood of Jesus* (1941),
+   de cineasta y reparto afroamericanos.
+3. **Con condiciones:** sin protagonistas menores de edad (los clasificadores fallan con niñas y niños)
+   y sin documentales, propaganda, animación ni cine de explotación.
 
-Cada película tiene su motivo en la columna `motivo_seleccion`. Antes de usarla, abrid su ficha,
-comprobad la licencia y poned `licencia_verificada = si`.
+El motivo de cada película está en la columna `motivo_seleccion`.
 
-### Qué significa "dominio público" aquí (importante)
+### Qué significa "dominio público" aquí
 
 - La licencia la **declara quien sube** la película a Internet Archive; no es una garantía.
-- Casi siempre significa dominio público **en EE. UU.** (p. ej. copyright no renovado). En la UE una
-  película está protegida hasta 70 años después de la muerte del último de sus autores principales
-  (director, guionista, autor de diálogos, compositor), así que algunas podrían seguir protegidas aquí.
-- Mitigación: **no redistribuimos los vídeos** (no están en el repo) ni fragmentos; solo publicamos
-  estadísticas agregadas. Contrastar con las mentoras si el análisis está cubierto por las excepciones
-  de minería de textos y datos (Directiva (UE) 2019/790).
+- Casi siempre significa dominio público **en EE. UU.** En la UE una película está protegida hasta
+  70 años después de la muerte del último de sus autores principales, así que alguna podría seguir
+  protegida aquí.
+- Por eso **no redistribuimos los vídeos** (no están en el repositorio) ni fragmentos: solo publicamos
+  estadísticas agregadas, en el marco de la excepción de minería de textos y datos de la Directiva (UE) 2019/790.
 - Atribución: columna `atribucion` (título, año y URL de Internet Archive).
 
 ### Limitaciones del corpus
 
-- **No representa "el cine"**: es cine clásico estadounidense de dominio público, con mucha serie B y
-  repartos mayoritariamente blancos. Los resultados se presentan como **estudio de caso exploratorio**.
-- Blanco y negro y baja resolución en muchas películas: el modelo rinde peor (ver evaluación de sesgos).
-- Contenido con estereotipos sexistas y racistas de época: se analiza (es parte del objetivo), pero se
-  contextualiza y no se muestra en la demo sin explicación.
+- **No representa todo el cine:** es cine clásico estadounidense de dominio público, con mucha serie B y
+  repartos mayoritariamente blancos. Presentamos los resultados como un **estudio de caso exploratorio**.
+- Muchas películas son en blanco y negro y de baja resolución, y ahí el modelo rinde peor.
+- Hay estereotipos sexistas y racistas de la época: los analizamos, porque es parte del objetivo,
+  pero los contextualizamos y no los mostramos en la demo sin explicación.
 
-## Evaluación de sesgos: FairFace
+## Anotación propia
 
-- https://github.com/joojs/fairface — 108.501 imágenes de caras equilibradas por grupo, con género y
-  edad. Licencia CC BY 4.0.
-- Uso: medir si el clasificador de género percibido falla más con algún grupo.
-- Limitación: sus etiquetas también son binarias y percibidas.
-
-## Ground truth propio
-
-`data/annotations/anotaciones.csv` — anotado a mano por el equipo (ver README de esa carpeta).
+`data/annotations/anotaciones.csv` y `data/annotations/no_detectadas.csv`: anotadas a mano por el equipo
+para evaluar el sistema (más detalle en el README de esa carpeta).

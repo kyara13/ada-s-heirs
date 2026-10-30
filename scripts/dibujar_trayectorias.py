@@ -203,7 +203,7 @@ def main():
     print(f"Vídeo: {salida}")
     print(f"Fichas: {n_p} personas en fichas_personas_{nombre}.png, {n_s} planos en fichas_planos_{nombre}.png")
     print(f"Plantilla con {len(vistos)} personas: {plantilla}")
-    print("Rellenad genero_percibido (mujer/hombre/no_determinado) y protagonista (si/no)")
+    print("Falta rellenar genero_percibido (mujer/hombre/no_determinado) y protagonista (si/no)")
     print("y copiad las filas a data/annotations/anotaciones.csv")
 
 

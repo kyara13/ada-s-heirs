@@ -1,46 +1,47 @@
-# Propuesta de métricas (entregable 1)
+# Propuesta de métricas
 
-> Este documento es la "propuesta conceptual de métricas" que pide el reto.
-> Rellenad los TODO y justificad cada decisión: la justificación es parte de la nota.
+## Problema
 
-## Problema reformulado (una frase)
+Medimos automáticamente cuánto aparecen las mujeres en las películas y con qué protagonismo visual,
+para que filmotecas, festivales, productoras e investigadoras puedan auditar la representación en el cine.
 
-<!-- TODO -->
+## Qué entendemos por protagonismo
 
-## Qué entendemos por protagonismo en vídeo
+Una persona es protagonista cuando la realización la sitúa en el centro de la atención visual:
+aparece mucho tiempo, en grande, centrada, sola en plano y en los momentos de apertura o cierre.
+Separamos este protagonismo de la simple presencia: salir mucho en un plano compartido no es lo mismo que ser el foco.
 
-<!-- TODO: definición del equipo. Ej: "Una persona es protagonista cuando la realización del vídeo
-la sitúa en el centro de la atención visual: aparece mucho tiempo, en grande, centrada, sola en plano
-y en los momentos de apertura o cierre." -->
+## Nivel 1: presencia
 
-## Nivel 1 — Presencia
-
-| Métrica | Definición | Por qué |
+| Métrica | Definición | Qué responde |
 |---|---|---|
-| % personas | personas distintas de cada género percibido / total | Cuántas mujeres aparecen |
-| % tiempo en pantalla | segundos en pantalla por género / total | Cuánto se las ve |
+| % de mujeres | mujeres distintas sobre el total de personas | cuántas mujeres aparecen |
+| % de tiempo | segundos en pantalla de mujeres sobre el total | cuánto tiempo se las ve |
 
-## Nivel 2 — Protagonismo (por persona)
+Las personas sin una etiqueta fiable cuentan como `no_determinado`. También calculamos el % de tiempo
+de mujeres solo sobre el tiempo con género determinado, para que no dependa de cuántas quedan sin decidir.
 
-| Componente | Cálculo | Peso | Justificación |
+## Nivel 2: protagonismo (por persona)
+
+| Componente | Cálculo | Peso | Por qué |
 |---|---|---|---|
-| Tiempo en pantalla | segundos / máx. del vídeo | 0.30 | <!-- TODO --> |
-| Tamaño | área media de la caja / área del frame, normalizada | 0.20 | Primer plano = más atención |
-| Centralidad | 1 − distancia al centro / distancia máxima | 0.15 | Pregunta del propio reto: ¿el centro es protagonista? |
-| En solitario | % de frames en que es la única persona | 0.20 | Plano individual = foco de la realización |
-| Apertura/cierre | aparece en el primer o último 10 % | 0.15 | El README del reto lo cita como indicador |
+| Tiempo en pantalla | segundos / máximo del vídeo | 0,30 | Es el indicador más directo de importancia en la historia |
+| Tamaño | área media de la caja / área del fotograma | 0,20 | Un primer plano concentra la atención |
+| En solitario | % de fotogramas en que es la única persona | 0,20 | El plano individual indica que la realización la pone en el foco |
+| Centralidad | 1 − distancia al centro / distancia máxima | 0,15 | Responde a la pregunta del reto de si el centro es el protagonista, sin que lo decida todo |
+| Apertura o cierre | aparece en el primer o último 10 % | 0,15 | Abrir o cerrar la historia es un rol protagonista |
 
-**Índice de protagonismo** = media ponderada (0–1). Persona protagonista si índice ≥ 0.5.
-Los pesos están en `config/config.yaml`.
+El **índice de protagonismo** es la media ponderada (de 0 a 1). Contamos como protagonista a quien
+tiene un índice de 0,5 o más, y medimos qué % de las protagonistas son mujeres. Los pesos están en
+`config/config.yaml`.
 
-## Validación de las métricas
+## Validación
 
-- ¿El índice coincide con el juicio humano? Comparar con la columna `protagonista` de las anotaciones.
-- Análisis de sensibilidad: ¿cambian las conclusiones si cambiamos los pesos? <!-- TODO -->
+Comparamos el índice con nuestro juicio humano (columna `protagonista` de las anotaciones).
+Analizar cómo cambian las conclusiones al variar los pesos está en la hoja de ruta.
 
-## Limitaciones conocidas
+## Limitaciones
 
-- Género **percibido** por un modelo, binario; categoría `no_determinado` cuando hay duda.
-- La centralidad depende de cómo graba cada institución o cadena.
+- El género es **percibido** por un modelo y binario; usamos `no_determinado` cuando hay duda.
+- La centralidad depende del estilo de cada película.
 - Sin audio no sabemos quién habla: alguien puede estar en plano sin intervenir.
-- <!-- TODO -->

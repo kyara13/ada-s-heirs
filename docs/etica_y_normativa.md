@@ -1,42 +1,44 @@
 # Marco ético y cumplimiento normativo
 
-## Los 7 principios del código ético europeo (Ethics Guidelines for Trustworthy AI)
+## Los 7 principios de las directrices éticas europeas para una IA fiable
 
-| Principio | Cómo lo cumple el proyecto |
+| Principio | Cómo lo cumplimos |
 |---|---|
-| Agencia y supervisión humanas | Demo con revisión: una persona acepta o corrige las etiquetas antes de usar el informe |
-| Robustez técnica y seguridad | Evaluación con anotaciones manuales; votación por trayectoria; `no_determinado` |
-| Privacidad y gobernanza de datos | No se guardan recortes de caras ni embeddings; solo datos agregados; no se identifica a nadie |
-| Transparencia | Métricas y pesos públicos y documentados; código abierto; se declara el uso de IA |
-| Diversidad, no discriminación y equidad | Evaluación de sesgos por edad/tono de piel; género percibido, no identidad |
-| Bienestar social y ambiental | Desarrollo en local con muestras pequeñas; GPU solo para el corpus; modelos ligeros, sin IA generativa innecesaria |
-| Rendición de cuentas | Repositorio reproducible; registro de decisiones en `docs/decisiones.md` |
+| Agencia y supervisión humanas | En la demo una persona acepta o corrige las etiquetas antes de usar el informe |
+| Robustez técnica y seguridad | Evaluación con anotaciones manuales, votación por trayectoria y `no_determinado` |
+| Privacidad y gobernanza de datos | No guardamos recortes de caras ni embeddings; solo datos agregados; no identificamos a nadie |
+| Transparencia | Métricas y pesos públicos y documentados, código abierto y uso de IA declarado |
+| Diversidad, no discriminación y equidad | Medimos los errores por género y por tipo de película; hablamos de género percibido, no de identidad |
+| Bienestar social y ambiental | Desarrollamos en local con muestras pequeñas y usamos la GPU solo para el corpus |
+| Rendición de cuentas | Repositorio reproducible y registro de decisiones en `docs/decisiones.md` |
 
-## Reglamento Europeo de IA (en vigor desde el 1/08/2024)
+## Reglamento Europeo de IA
 
-<!-- TODO: clasificación de riesgo razonada del sistema. Puntos a analizar:
-- No hay identificación biométrica de personas (no reconocemos QUIÉN es nadie).
-- Sí hay inferencia de un atributo (género percibido) a partir de la cara: argumentad por qué
-  no entra en las prácticas prohibidas y qué salvaguardas aplicamos.
-- Uso estadístico/agregado, no para tomar decisiones sobre personas concretas.
-Contrastad este análisis con las mentoras en Discord antes de entregarlo. -->
+- No hacemos identificación biométrica: no reconocemos **quién** es nadie.
+- Sí estimamos un atributo, el género percibido, a partir de la cara. Lo usamos solo con fines
+  estadísticos y agregados sobre obras audiovisuales publicadas, nunca para tomar decisiones sobre
+  personas concretas.
+- Aplicamos salvaguardas: revisión humana, categoría `no_determinado`, documentación pública de las
+  limitaciones y ningún almacenamiento de datos faciales.
 
 ## RGPD
 
-<!-- TODO: base jurídica (interés público / investigación), minimización, no conservación de
-imágenes faciales, figuras públicas en actos públicos. -->
+- **Minimización:** procesamos las caras en memoria y solo guardamos resultados agregados.
+- **Conservación:** no conservamos imágenes faciales ni embeddings.
+- **Contexto:** analizamos intérpretes en obras publicadas, con un fin de investigación y de interés público.
 
 ## Datos de terceros
 
-Películas con licencia abierta declarada en Internet Archive (dominio público en EE. UU.). No se
-redistribuyen los vídeos ni fragmentos; solo estadísticas agregadas. Los actores y actrices son figuras
-públicas en obras publicadas; no se identifica a nadie. Ver `datos_y_licencias.md`.
+Usamos películas con licencia abierta declarada en Internet Archive (dominio público en EE. UU.).
+No redistribuimos los vídeos ni fragmentos; solo publicamos estadísticas agregadas. Más detalle en
+`datos_y_licencias.md`.
 
 ## Riesgos y mitigaciones
 
 | Riesgo | Mitigación |
 |---|---|
-| Etiquetado erróneo de género de una persona | `no_determinado`, revisión humana, solo resultados agregados |
-| Sesgo del clasificador con ciertos grupos | Evaluación por grupos y reporte de la limitación |
-| Uso del sistema para vigilar a personas concretas | Licencia y documentación de uso previsto; no se guarda identidad |
-| <!-- TODO --> | |
+| Etiquetar mal el género de una persona | `no_determinado`, revisión humana y solo resultados agregados |
+| Sesgo del clasificador con cine mudo o de baja calidad | Evaluación por tipo de película y películas marcadas como dudosas |
+| Que el detector pase por alto a mujeres | Anotamos las apariciones no detectadas y lo medimos por género |
+| Uso del sistema para vigilar a personas concretas | Uso previsto documentado; no guardamos ninguna identidad |
+| Licencias de modelos y películas | Tabla de licencias de terceros en el README; no redistribuimos vídeos |
